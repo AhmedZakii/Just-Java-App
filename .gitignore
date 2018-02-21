@@ -1,22 +1,216 @@
-# Compiled class file
-*.class
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.android.justjava.MainActivity">
 
-# Log file
-*.log
 
-# BlueJ files
-*.ctxt
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/breakfast"
+        android:scaleType="centerCrop" />
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+    <TextView
+        android:id="@+id/nice_words"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="You Need A Cup Of Cofee For A Nice Day"
+        android:textAllCaps="true"
+        android:textColor="#FAFAFA"
+        android:textSize="18sp" />
 
-# Package Files #
-*.jar
-*.war
-*.ear
-*.zip
-*.tar.gz
-*.rar
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nice_words"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Quantity"
+        android:textAllCaps="true"
+        android:textColor="#FAFAFA"
+        android:textSize="25sp" />
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/quantity"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linear">
+
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:onClick="decrement"
+            android:textSize="20dp"
+            android:text="-" />
+
+        <TextView
+            android:id="@+id/quantity_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="2dp"
+            android:text="0"
+            android:textColor="#FAFAFA"
+            android:textSize="25sp" />
+
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:onClick="increment"
+            android:textSize="20dp"
+            android:text="+" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/linear"
+        android:text="Order Summary"
+        android:textAllCaps="true"
+        android:textColor="#FAFAFA"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/order_summary_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:layout_below="@id/price"
+        android:text="$0"
+        android:textColor="#FAFAFA"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/order_summary_text_view"
+        android:onClick="submitOrder"
+        android:text="Order"
+        android:textSize="16sp" />
+
+</RelativeLayout>
+
+
+
+
+
+
+
+/**
+ * IMPORTANT: Make sure you are using the correct package name.
+ * This example uses the package name:
+ * package com.example.android.justjava
+ * If you get an error when copying this code into Android studio, update it to match teh package name found
+ * in the project's AndroidManifest.xml file.
+ **/
+
+package com.example.android.justjava;
+
+
+import java.text.NumberFormat;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.TextView;
+
+/**
+ * This app displays an order form to order coffee.
+ */
+public class MainActivity extends AppCompatActivity {
+    int quantity = 0;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    /**
+     * This method is called when the order button is clicked.
+     */
+    public void submitOrder(View view) {
+        int price = quantity * 5;
+        String priceMessage = "Total Price is = $" + price;
+        priceMessage = priceMessage + "\n Thank You!";
+        displayMessage(priceMessage);
+
+        calculatePrice(quantity , 10);
+    }
+
+    /**
+     * This method is called when the plus button is clicked.
+     */
+
+    public void increment(View view) {
+        quantity = quantity + 1;
+        displayQuantity(quantity);
+
+    }
+
+    /**
+     * This method is called when the minus button is clicked.
+     */
+
+    public void decrement(View view) {
+        quantity= quantity - 1;
+        displayQuantity(quantity);
+
+    }
+
+    /**
+     * This method displays the given quantity value on the screen.
+     */
+    private void displayQuantity(int numberOfCoffees) {
+        TextView quantityTextView = (TextView) findViewById(R.id.quantity_text_view);
+        quantityTextView.setText("" + numberOfCoffees);
+    }
+
+    /**
+     * This method displays the given price on the screen.
+     */
+    /**
+     * Calculates the price of the order.
+     *
+     * @param quantity is the number of cups of coffee ordered
+     */
+    private void calculatePrice(int quantity , int pricePerCup) {
+        int price = quantity * pricePerCup;
+
+    }
+        /**
+         * This method displays the given text on the screen.
+         */
+    private void displayMessage(String message) {
+        TextView orderSummaryTextView = (TextView) findViewById(R.id.order_summary_text_view);
+        orderSummaryTextView.setText(message);
+    }
+
+    private  String craterOrderSummary(int price){
+        String priceMessage = "Name: Ahmed Zaki";
+        priceMessage = priceMessage + "quantity: " + quantity;
+        priceMessage = "Total Price is = $" + price;
+        priceMessage = priceMessage + "\n Thank You!";
+        return  priceMessage;
+
+    }
+}
